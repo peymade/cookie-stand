@@ -40,11 +40,11 @@ const Seattle = {
 
       // This will make the string, depending on what i is, which will calculate how to write out the time of day. 
       if (i===6){
-        this.cookieStats.push((i+6)+ 'pm: ' + hourTotal+ ' cookies');
+        this.cookieStats.push(`${i+6} pm: ${hourTotal} cookies`);
       } else if (i>6) {
-        this.cookieStats.push((i-6)+ 'pm: ' + hourTotal+ ' cookies');
+        this.cookieStats.push(`${i-6} pm: ${hourTotal} cookies`);
       } else {
-        this.cookieStats.push((i+6)+ 'am: ' + hourTotal+ ' cookies');
+        this.cookieStats.push(`${i+6} am: ${hourTotal} cookies`);
     } 
     // Add the generated hourly total of cookies to the daily total
     this.dailyTotal = hourTotal + this.dailyTotal;
@@ -91,11 +91,11 @@ const Tokyo = {
 
       // This will make the string, depending on what i is, which will calculate how to write out the time of day. 
       if (i===6){
-        this.cookieStats.push((i+6)+ 'pm: ' + hourTotal+ ' cookies');
+        this.cookieStats.push(`${i+6} pm: ${hourTotal} cookies`);
       } else if (i>6) {
-        this.cookieStats.push((i-6)+ 'pm: ' + hourTotal+ ' cookies');
+        this.cookieStats.push(`${i-6} pm: ${hourTotal} cookies`);
       } else {
-        this.cookieStats.push((i+6)+ 'am: ' + hourTotal+ ' cookies');
+        this.cookieStats.push(`${i+6} am: ${hourTotal} cookies`);
     } 
     // Add the generated hourly total of cookies to the daily total
     this.dailyTotal = hourTotal + this.dailyTotal;
@@ -141,11 +141,11 @@ const Dubai = {
 
       // This will make the string, depending on what i is, which will calculate how to write out the time of day. 
       if (i===6){
-        this.cookieStats.push((i+6)+ 'pm: ' + hourTotal+ ' cookies');
+        this.cookieStats.push(`${i+6} pm: ${hourTotal} cookies`);
       } else if (i>6) {
-        this.cookieStats.push((i-6)+ 'pm: ' + hourTotal+ ' cookies');
+        this.cookieStats.push(`${i-6} pm: ${hourTotal} cookies`);
       } else {
-        this.cookieStats.push((i+6)+ 'am: ' + hourTotal+ ' cookies');
+        this.cookieStats.push(`${i+6} am: ${hourTotal} cookies`);
     } 
     // Add the generated hourly total of cookies to the daily total
     this.dailyTotal = hourTotal + this.dailyTotal;
@@ -193,11 +193,11 @@ const Paris = {
 
       // This will make the string, depending on what i is, which will calculate how to write out the time of day. 
       if (i===6){
-        this.cookieStats.push((i+6)+ 'pm: ' + hourTotal+ ' cookies');
+        this.cookieStats.push(`${i+6} pm: ${hourTotal} cookies`);
       } else if (i>6) {
-        this.cookieStats.push((i-6)+ 'pm: ' + hourTotal+ ' cookies');
+        this.cookieStats.push(`${i-6} pm: ${hourTotal} cookies`);
       } else {
-        this.cookieStats.push((i+6)+ 'am: ' + hourTotal+ ' cookies');
+        this.cookieStats.push(`${i+6} am: ${hourTotal} cookies`);
     } 
     // Add the generated hourly total of cookies to the daily total
     this.dailyTotal = hourTotal + this.dailyTotal;
@@ -244,11 +244,11 @@ const Lima = {
 
       // This will make the string, depending on what i is, which will calculate how to write out the time of day. 
       if (i===6){
-        this.cookieStats.push((i+6)+ 'pm: ' + hourTotal+ ' cookies');
+        this.cookieStats.push(`${i+6} pm: ${hourTotal} cookies`);
       } else if (i>6) {
-        this.cookieStats.push((i-6)+ 'pm: ' + hourTotal+ ' cookies');
+        this.cookieStats.push(`${i-6} pm: ${hourTotal} cookies`);
       } else {
-        this.cookieStats.push((i+6)+ 'am: ' + hourTotal+ ' cookies');
+        this.cookieStats.push(`${i+6} am: ${hourTotal} cookies`);
     } 
     // Add the generated hourly total of cookies to the daily total
     this.dailyTotal = hourTotal + this.dailyTotal;
