@@ -7,6 +7,8 @@ function randomCustomerNum(min, max){
   return Math.floor(Math.random() *(max - min +1) + min);
 }
 
+// NEXT ROUND = creatre constandt global array for 6am, 7am, 8am, etc. 
+
 // Objects for Locations
 
 // Each object contains the location of the store as a string, the minimum and maximum hourly customers, the average cookies per customer, and a randomized number of hourly customers based on the min and max. 
@@ -21,6 +23,8 @@ const Seattle = {
   customerNum: 0,
   cookieStats: [],
   dailyTotal: 0,
+  // ADDED
+  hoursofOperation: ['6am, 7am;];
   
   // This function sets the number of customers equal to a randomized value between the min and max. The randomizing function lives outside the object. 
   getCustomerNum: function() {
@@ -56,6 +60,17 @@ const Seattle = {
     this.cookieStats = this.cookieStats;
     console.log(this.cookieStats);
   } 
+}
+
+function generateSalesArray(location){
+  location.dailyTotal = 0;
+  location.hourlySalesArray - [];
+  let customers = location.randomNumCustomers;
+  let cookiesSold = Math.floor()
+  location.grandTotal += cookiesSold;
+
+  location.hourlySalesArray.push(location.)
+
 }
 
 // Run the code to generate the array
@@ -310,4 +325,17 @@ cookieOutput.appendChild(article);
   }
 
   }
+
+  for (let j=0; j<location.hourlyArray.length; j++){
+    // create an li 
+    const liElem = document.createElement('li');
+    // add text content that matches the store's cookie output at that index in the array
+    liElem.textContent = `${location.hourlyArray[k]}` : ;
+    // append li to ul
+    ulElem.appendChild(liElem);
+  }
+
+  }
   
+
+  ${hourlyArray} : 
