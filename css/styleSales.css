@@ -1,19 +1,44 @@
 
 body {
-  background-color: rgb(241, 184, 165);
+  background-color: rgb(175, 216, 240);
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
   font-size: 1em;
 }
 
 
-header img {
-  width: 100px;
-  padding: 1em;
+#logo img {
+  width: 200px;
+  display: block;
+  margin: auto;
+  position: sticky;
+}
+
+header {
+  justify-content: center;
+  display: flex;
+  background-color: rgb(152, 171, 236);
+  margin-top: 15px;
 }
 
 h1 {
+  font-size: 2.4em;
+  text-align: center;
+  padding: 10px;
+}
+
+h3 {
   font-size: 2em;
+  font-size: 1.5em;
+  color:white;
+  display: block;
+  margin: 20px auto 20px auto;
+  position: sticky;
+  background-color: rgb(7, 55, 109);
+  width: 200px;
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 10px;
+  padding: 5px;
 }
 
 h2 {
@@ -25,8 +50,7 @@ h2 {
 table {
   background-color: darkseagreen;
   line-height: 2em;
-  margin-left: 20%;
-  margin-right: 20%;
+  margin: auto;
 }
 
 td {
@@ -37,5 +61,11 @@ td {
 
 th {
   border: 2px solid black;
+}
+
+footer {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: white;
 }
 

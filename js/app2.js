@@ -133,7 +133,7 @@ function tableFooter(){
   thTotalElem.textContent = 'Total';
   trFooterElem.appendChild(thTotalElem);
 
-  // For every value in the hours array, add a new cell with that time
+  // For every value in the hours array, add a new cell with that hourly total
   for (let k = 0; k < totalsPerHour.length; k++) {
     const thElem = document.createElement('th');
     thElem.textContent = totalsPerHour[k];
