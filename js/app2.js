@@ -19,6 +19,9 @@ function Store(city, minCustomer, maxCustomer, avgCookie) {
 // Variable for grand total of cookies sold by all locations on a given day
   let overallGrandTotal = 0;
 
+// Global variable to store store names
+let storeArray = [];
+
 
 // Make a function that generates a random number based on the min and max of whatever object it is working on
 Store.prototype.getRandomNumber = function () {
@@ -35,11 +38,12 @@ Store.prototype.generateCookieArray = function() {
     this.cookieArray.push(hourTotal);
     // This replaces the array value at the index number with a new number that adds on the new hourly total. 
     totalsPerHour[i] = hourTotal + totalsPerHour[i];
-    console.log(this.cookieArray);
-    console.log(totalsPerHour);
+    // console.log(this.cookieArray);
+    // console.log(totalsPerHour);
   } 
   // Add the total cookies for this location to the overall total of all locations
   overallGrandTotal += this.grandTotal;
+  storeArray.push(this.city);
 }
 
 let Seattle = new Store('Seattle', 23, 65, 6.3);
@@ -47,14 +51,16 @@ let Tokyo = new Store('Tokyo', 3, 24, 1.2);
 let Dubai = new Store('Dubai', 11, 38, 3.7);
 let Paris = new Store('Paris', 20, 38, 2.3);
 let Lima = new Store('Lima', 2, 16, 4.6);
+let London = new Store('London', 5, 16, 4);
 
 Seattle.generateCookieArray();
 Tokyo.generateCookieArray();
 Dubai.generateCookieArray();
 Paris.generateCookieArray();
 Lima.generateCookieArray();
+London.generateCookieArray();
 
-
+console.log(storeArray);
 
 
 //Access div in which table will live
@@ -110,17 +116,15 @@ Store.prototype.render = function() {
     const tdElem = document.createElement('td');
     tdElem.textContent = this.cookieArray[j];
     trElem.appendChild(tdElem);
-    console.log(tdElem);
+    // console.log(tdElem);
 
-  }
+    }
 
   // Add last cell with overall daily total for the store
   const tdElem = document.createElement('td');
   tdElem.textContent = this.grandTotal;
   trElem.appendChild(tdElem);
-}
-
-
+  }
 
 
 function tableFooter(){
@@ -151,8 +155,10 @@ function tableFooter(){
 // Run functions to create table header, all table rows, and the footer. 
 tableHeader();
 Seattle.render();
-Tokyo.render();
-Dubai.render();
-Paris.render();
-Lima.render();
+// Iterate through the array storing the store names
+for (let m = 0; m < storeArray.length; m++){
+  let currentStore = storeArray[m];
+  console.log(currentStore);
+  currentStore.render();
+}
 tableFooter();
