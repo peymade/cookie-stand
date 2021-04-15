@@ -1,341 +1,162 @@
-// 'use strict';
+'use strict';
 
-// // Global Items
+// Creat a constructor function called Store that builds new store locations
+function Store(city, minCustomer, maxCustomer, avgCookie) {
+  this.city = city;
+  this.minCustomer = minCustomer;
+  this.maxCustomer = maxCustomer;
+  this.avgCookie = avgCookie;
+  this.grandTotal = 0;
+  this.cookieArray = [];
+}
 
-// //Function randomizing number of hourly customers
-// function randomCustomerNum(min, max){
-//   return Math.floor(Math.random() *(max - min +1) + min);
-// }
+// Array for hours of operation
+  const hoursArray = ['6am', '7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm'];
 
-// // NEXT ROUND = creatre constandt global array for 6am, 7am, 8am, etc. 
+// Array for Hourly totals from all store locations combined (At footer of table)
+  const totalsPerHour = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-// // Objects for Locations
+// Variable for grand total of cookies sold by all locations on a given day
+  let overallGrandTotal = 0;
 
-// // Each object contains the location of the store as a string, the minimum and maximum hourly customers, the average cookies per customer, and a randomized number of hourly customers based on the min and max. 
+// Global variable to store store names
+let storeArray = [];
 
-// // SEATTLE
 
-// const Seattle = {
-//   location: 'Seattle',
-//   minCustomer: 23,
-//   maxCustomer: 65,
-//   avgCookie: 6.3,
-//   customerNum: 0,
-//   cookieStats: [],
-//   dailyTotal: 0,
-//   // ADDED
-//   hoursofOperation: ['6am, 7am;];
+// Make a function that generates a random number based on the min and max of whatever object it is working on
+Store.prototype.getRandomNumber = function () {
+  let randomNumber = Math.floor(Math.random() * (this.maxCustomer - this.minCustomer + 1) + this.minCustomer);
+  return randomNumber;
+}
+
+// A function that loops 14 times and generates an array, which contains the hourly cookie sales, by multiplying the randomly generated customer number with the average cookies sold. It calls on the getRandomNumber prototype
+Store.prototype.generateCookieArray = function() {
+  for (let i = 0; i < hoursArray.length; i++) {
+    let customerNum = this.getRandomNumber();
+    let hourTotal = Math.floor(this.avgCookie * customerNum);
+    this.grandTotal += hourTotal;
+    this.cookieArray.push(hourTotal);
+    // This replaces the array value at the index number with a new number that adds on the new hourly total. 
+    totalsPerHour[i] = hourTotal + totalsPerHour[i];
+    // console.log(this.cookieArray);
+    // console.log(totalsPerHour);
+  } 
+  // Add the total cookies for this location to the overall total of all locations
+  overallGrandTotal += this.grandTotal;
+  storeArray.push(this.city);
+}
+
+let Seattle = new Store('Seattle', 23, 65, 6.3);
+let Tokyo = new Store('Tokyo', 3, 24, 1.2);
+let Dubai = new Store('Dubai', 11, 38, 3.7);
+let Paris = new Store('Paris', 20, 38, 2.3);
+let Lima = new Store('Lima', 2, 16, 4.6);
+
+Seattle.generateCookieArray();
+Tokyo.generateCookieArray();
+Dubai.generateCookieArray();
+Paris.generateCookieArray();
+Lima.generateCookieArray();
+
+console.log(storeArray);
+
+
+//Access div in which table will live
+const cookieDivElem = document.getElementById('cookieOutput');
+
+// Make overall Table
+const tableElem = document.createElement('table');
+cookieDivElem.appendChild(tableElem);
+
+// Header function
+function tableHeader(){
   
-//   // This function sets the number of customers equal to a randomized value between the min and max. The randomizing function lives outside the object. 
-//   getCustomerNum: function() {
-//         this.customerNum = randomCustomerNum(this.minCustomer,this.maxCustomer);
-//   },
+  // Create header row 
+  const trHeadElem = document.createElement('tr');
+  tableElem.appendChild(trHeadElem);
+  // Create and add empty first cell
+  const thEmptyElem = document.createElement('th');
+  thEmptyElem.textContent = "";
+  trHeadElem.appendChild(thEmptyElem);
 
-//   getCookieStats: function() {
+  // For every value in the hours array, add a new cell with that time
+  for (let k = 0; k < hoursArray.length; k++) {
+    const thTimeElem = document.createElement('th');
+    thTimeElem.textContent = hoursArray[k];
+    trHeadElem.appendChild(thTimeElem);
+  }
 
-//     // Start a for loops that runs 14 times. 
-//     for (let i=0; i <=13; i++){
+  //Add on area for daily Totals
+  const thElem = document.createElement('th');
+  thElem.textContent = 'Daily Total';
+  trHeadElem.appendChild(thElem);
 
-//       // Generate a random number of customers
-//       Seattle.getCustomerNum();
+}
 
-//       // Set the total cookies for the hour equal to the average times the number of customers
-//       let hourTotal = Math.floor(this.avgCookie * this.customerNum);
 
-//       // This will make the string, depending on what i is, which will calculate how to write out the time of day. 
-//       if (i===6){
-//         this.cookieStats.push(`${i+6} pm: ${hourTotal} cookies`);
-//       } else if (i>6) {
-//         this.cookieStats.push(`${i-6} pm: ${hourTotal} cookies`);
-//       } else {
-//         this.cookieStats.push(`${i+6} am: ${hourTotal} cookies`);
-//     } 
-//     // Add the generated hourly total of cookies to the daily total
-//     this.dailyTotal = hourTotal + this.dailyTotal;
-//   }
-//     // Add the final daily total to the array
-//     this.cookieStats.push('Total: ' + this.dailyTotal+ ' cookies');
 
-//     // Set cookieStats array equal to the array just generated
-//     this.cookieStats = this.cookieStats;
-//     console.log(this.cookieStats);
-//   } 
-// }
 
-// function generateSalesArray(location){
-//   location.dailyTotal = 0;
-//   location.hourlySalesArray - [];
-//   let customers = location.randomNumCustomers;
-//   let cookiesSold = Math.floor()
-//   location.grandTotal += cookiesSold;
+//Make new row with data for each Store
+Store.prototype.render = function() {
 
-//   location.hourlySalesArray.push(location.)
+  // New row for new Store. Only do once, outside of for loop
+  const trElem = document.createElement('tr');
+  tableElem.appendChild(trElem);
 
-// }
+  // Cell Containing name of Store, Only do once. 
+  const tdNameElem = document.createElement('td');
+  tdNameElem.textContent = this.city;
+  trElem.appendChild(tdNameElem);
 
-// // Run the code to generate the array
-// Seattle.getCookieStats();
+  for (let j = 0; j < this.cookieArray.length; j++) {
 
-// // TOKYO
+    // Add new td each time for loop goes
+    const tdElem = document.createElement('td');
+    tdElem.textContent = this.cookieArray[j];
+    trElem.appendChild(tdElem);
+    // console.log(tdElem);
 
-// const Tokyo = {
-//   location: 'Tokyo',
-//   minCustomer: 3,
-//   maxCustomer: 24,
-//   avgCookie: 1.2,
-//   customerNum: 0,
-//   customerNum: 0,
-//   cookieStats: [],
-//   dailyTotal: 0,
+  }
+
+  // Add last cell with overall daily total for the store
+  const tdElem = document.createElement('td');
+  tdElem.textContent = this.grandTotal;
+  trElem.appendChild(tdElem);
+}
+
+
+
+
+function tableFooter(){
   
-//   // This function sets the number of customers equal to a randomized value between the min and max. The randomizing function lives outside the object. 
-//   getCustomerNum: function() {
-//         this.customerNum = randomCustomerNum(this.minCustomer,this.maxCustomer);
-//   },
+  // Create footer row 
+  const trFooterElem = document.createElement('tr');
+  tableElem.appendChild(trFooterElem);
+  // Create and add 'Total' title for the row
+  const thTotalElem = document.createElement('th');
+  thTotalElem.textContent = 'Total';
+  trFooterElem.appendChild(thTotalElem);
 
-//   getCookieStats: function() {
+  // For every value in the hours array, add a new cell with that hourly total
+  for (let k = 0; k < totalsPerHour.length; k++) {
+    const thElem = document.createElement('th');
+    thElem.textContent = totalsPerHour[k];
+    trFooterElem.appendChild(thElem);
+  }
 
-//     // Start a for loops that runs 14 times. 
-//     for (let i=0; i <=13; i++){
+  // Add the grand total of all locations as the last cell
+  const thElem = document.createElement('th');
+  thElem.textContent = overallGrandTotal;
+  trFooterElem.appendChild(thElem);
 
-//       // Generate a random number of customers
-//       Tokyo.getCustomerNum();
-
-//       // Set the total cookies for the hour equal to the average times the number of customers
-//       let hourTotal = Math.floor(this.avgCookie * this.customerNum);
-
-//       // This will make the string, depending on what i is, which will calculate how to write out the time of day. 
-//       if (i===6){
-//         this.cookieStats.push(`${i+6} pm: ${hourTotal} cookies`);
-//       } else if (i>6) {
-//         this.cookieStats.push(`${i-6} pm: ${hourTotal} cookies`);
-//       } else {
-//         this.cookieStats.push(`${i+6} am: ${hourTotal} cookies`);
-//     } 
-//     // Add the generated hourly total of cookies to the daily total
-//     this.dailyTotal = hourTotal + this.dailyTotal;
-//   }
-//     // Add the final daily total to the array
-//     this.cookieStats.push('Total: ' + this.dailyTotal+ ' cookies');
-
-//     // Set cookieStats array equal to the array just generated
-//     this.cookieStats = this.cookieStats;
-//     console.log(this.cookieStats);
-//   } 
-// }
-
-// // Run the code to generate the array
-// Tokyo.getCookieStats();
-
-// // DUBAI
-
-// const Dubai = {
-//   location: 'Dubai',
-//   minCustomer: 11,
-//   maxCustomer: 38,
-//   avgCookie: 3.7,
-//   customerNum: 0,
-//   cookieStats: [],
-//   dailyTotal: 0,
-  
-//   // This function sets the number of customers equal to a randomized value between the min and max. The randomizing function lives outside the object. 
-//   getCustomerNum: function() {
-//         this.customerNum = randomCustomerNum(this.minCustomer,this.maxCustomer);
-//   },
-
-//   getCookieStats: function() {
-
-//     // Start a for loops that runs 14 times. 
-//     for (let i=0; i <=13; i++){
-
-//       // Generate a random number of customers
-//       Dubai.getCustomerNum();
-
-//       // Set the total cookies for the hour equal to the average times the number of customers
-//       let hourTotal = Math.floor(this.avgCookie * this.customerNum);
-
-//       // This will make the string, depending on what i is, which will calculate how to write out the time of day. 
-//       if (i===6){
-//         this.cookieStats.push(`${i+6} pm: ${hourTotal} cookies`);
-//       } else if (i>6) {
-//         this.cookieStats.push(`${i-6} pm: ${hourTotal} cookies`);
-//       } else {
-//         this.cookieStats.push(`${i+6} am: ${hourTotal} cookies`);
-//     } 
-//     // Add the generated hourly total of cookies to the daily total
-//     this.dailyTotal = hourTotal + this.dailyTotal;
-//   }
-//     // Add the final daily total to the array
-//     this.cookieStats.push('Total: ' + this.dailyTotal+ ' cookies');
-
-//     // Set cookieStats array equal to the array just generated
-//     this.cookieStats = this.cookieStats;
-//     console.log(this.cookieStats);
-//   } 
-// }
-
-// // Run the code to generate the array
-// Dubai.getCookieStats();
+}
 
 
-
-// // PARIS
-
-// const Paris = {
-//   location: 'Paris',
-//   minCustomer: 20,
-//   maxCustomer: 38,
-//   avgCookie: 2.3,
-//   customerNum: 0,
-//   cookieStats: [],
-//   dailyTotal: 0,
-  
-//   // This function sets the number of customers equal to a randomized value between the min and max. The randomizing function lives outside the object. 
-//   getCustomerNum: function() {
-//         this.customerNum = randomCustomerNum(this.minCustomer,this.maxCustomer);
-//   },
-
-//   getCookieStats: function() {
-
-//     // Start a for loops that runs 14 times. 
-//     for (let i=0; i <=13; i++){
-
-//       // Generate a random number of customers
-//       Paris.getCustomerNum();
-
-//       // Set the total cookies for the hour equal to the average times the number of customers
-//       let hourTotal = Math.floor(this.avgCookie * this.customerNum);
-
-//       // This will make the string, depending on what i is, which will calculate how to write out the time of day. 
-//       if (i===6){
-//         this.cookieStats.push(`${i+6} pm: ${hourTotal} cookies`);
-//       } else if (i>6) {
-//         this.cookieStats.push(`${i-6} pm: ${hourTotal} cookies`);
-//       } else {
-//         this.cookieStats.push(`${i+6} am: ${hourTotal} cookies`);
-//     } 
-//     // Add the generated hourly total of cookies to the daily total
-//     this.dailyTotal = hourTotal + this.dailyTotal;
-//   }
-//     // Add the final daily total to the array
-//     this.cookieStats.push('Total: ' + this.dailyTotal+ ' cookies');
-
-//     // Set cookieStats array equal to the array just generated
-//     this.cookieStats = this.cookieStats;
-//     console.log(this.cookieStats);
-//   } 
-// }
-
-// // Run the code to generate the array
-// Paris.getCookieStats();
-
-
-// // LIMA
-
-// const Lima = {
-//   location: 'Lima',
-//   minCustomer: 2,
-//   maxCustomer: 16,
-//   avgCookie: 4.6,
-//   customerNum: 0,
-//   cookieStats: [],
-//   dailyTotal: 0,
-  
-//   // This function sets the number of customers equal to a randomized value between the min and max. The randomizing function lives outside the object. 
-//   getCustomerNum: function() {
-//         this.customerNum = randomCustomerNum(this.minCustomer,this.maxCustomer);
-//   },
-
-//   getCookieStats: function() {
-
-//     // Start a for loops that runs 14 times. 
-//     for (let i=0; i <=13; i++){
-
-//       // Generate a random number of customers
-//       Lima.getCustomerNum();
-
-//       // Set the total cookies for the hour equal to the average times the number of customers
-//       let hourTotal = Math.floor(this.avgCookie * this.customerNum);
-
-//       // This will make the string, depending on what i is, which will calculate how to write out the time of day. 
-//       if (i===6){
-//         this.cookieStats.push(`${i+6} pm: ${hourTotal} cookies`);
-//       } else if (i>6) {
-//         this.cookieStats.push(`${i-6} pm: ${hourTotal} cookies`);
-//       } else {
-//         this.cookieStats.push(`${i+6} am: ${hourTotal} cookies`);
-//     } 
-//     // Add the generated hourly total of cookies to the daily total
-//     this.dailyTotal = hourTotal + this.dailyTotal;
-//   }
-//     // Add the final daily total to the array
-//     this.cookieStats.push('Total: ' + this.dailyTotal+ ' cookies');
-
-//     // Set cookieStats array equal to the array just generated
-//     this.cookieStats = this.cookieStats;
-//     console.log(this.cookieStats);
-//   } 
-// }
-
-// // Run the code to generate the array
-// Lima.getCookieStats();
-
-
-
-
-
-// // Create an array of all Store names
-// const storeArray = [Seattle, Tokyo, Dubai, Paris, Lima]
-
-
-// // Create a const variable of the div with the id 'Cookie Output'
-// const cookieOutput = document.getElementById("cookieOutput");
-// // Create a const that is a new element of an article tag 
-// const article = document.createElement('article'); 
-// // Go to cookieOutput and add an article element within it as a child
-// cookieOutput.appendChild(article);
-
-
-// // Display the arrays as an unordered list 
-
-// // Iterate through the array of location names using a for loop 
-//   for (let j=0; j < storeArray.length; j++) {
-//     let currentStore = storeArray[j];
-  
-//     console.log(currentStore);
-  
-//   // Create an h2 element 
-//   const h2Elem = document.createElement('h2');
-//   // add location name to the element
-//   h2Elem.textContent = currentStore.location;
-//   // Add the h2element as a child in the article
-//   article.appendChild(h2Elem);
-
-//   // Make ul element
-//   const ulElem = document.createElement('ul');
-//   article.appendChild(ulElem);
-  
-//   for (let k=0; k<currentStore.cookieStats.length; k++){
-//     // create an li 
-//     const liElem = document.createElement('li');
-//     // add text content that matches the store's cookie output at that index in the array
-//     liElem.textContent = `${currentStore.cookieStats[k]}`;
-//     // append li to ul
-//     ulElem.appendChild(liElem);
-//   }
-
-//   }
-
-//   for (let j=0; j<location.hourlyArray.length; j++){
-//     // create an li 
-//     const liElem = document.createElement('li');
-//     // add text content that matches the store's cookie output at that index in the array
-//     liElem.textContent = `${location.hourlyArray[k]}` : ;
-//     // append li to ul
-//     ulElem.appendChild(liElem);
-//   }
-
-//   }
-  
-
-//   ${hourlyArray} : 
+// Run functions to create table header, all table rows, and the footer. 
+tableHeader();
+Seattle.render();
+Tokyo.render();
+Dubai.render();
+Paris.render();
+Lima.render();
+tableFooter();
