@@ -4,6 +4,7 @@
   <title>Salmon Cookies Sales Page</title>
   <link href = "css/reset.css" type= "text/css" rel="stylesheet"/>
   <link href = "css/styleSales.css" type= "text/css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -16,13 +17,42 @@
     <h1>Pat's Salmon Cookies</h1>
   </header>
 
-  <h3>Sales Data for All Locations</h3>
 
 
   <main>
+
+    <div id="newStore">
+      <h2>Add a Store</h2>
+      <p>If you fill out the form to add a new store loaction, we will generate estimated sales data for that store.</p>
+      <form id="addStore">
+        <fieldset>
+          <label>Location
+            <input name="name" type="text" required/>
+          </label>
+          <label>Minimum Customers Per Hour
+            <input name="minCustomer" type="number" required>
+          </label>
+          <label>Maximum Customers Per Hour
+            <input name="maxCustomer" type="number" required>
+          </label>
+          <label>Average Cookies Per Customer
+            <input name="avgCookie" type="number" step="0.01" required>
+          </label>
+          <button type="submit">Submit</button>
+        </fieldset>
+      </form>
+    </div>
+
+    <div class="empty"></div>
+
+    <h3>Sales Data for All Locations</h3>
+
+
+
     <div id="cookieOutput">
       
     </div>
+
   </main>
 
 
