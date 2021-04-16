@@ -22,6 +22,9 @@ function Store(city, minCustomer, maxCustomer, avgCookie) {
 // Global variable to store store names
 let storeArray = [];
 
+// Point to the Form
+const formElem = document.getElementById('addStore');
+
 
 // Make a function that generates a random number based on the min and max of whatever object it is working on
 Store.prototype.getRandomNumber = function () {
@@ -43,7 +46,7 @@ Store.prototype.generateCookieArray = function() {
   } 
   // Add the total cookies for this location to the overall total of all locations
   overallGrandTotal += this.grandTotal;
-  storeArray.push(this.city);
+  storeArray.push(this);
 }
 
 let Seattle = new Store('Seattle', 23, 65, 6.3);
@@ -51,21 +54,18 @@ let Tokyo = new Store('Tokyo', 3, 24, 1.2);
 let Dubai = new Store('Dubai', 11, 38, 3.7);
 let Paris = new Store('Paris', 20, 38, 2.3);
 let Lima = new Store('Lima', 2, 16, 4.6);
-let London = new Store('London', 5, 16, 4);
 
 Seattle.generateCookieArray();
 Tokyo.generateCookieArray();
 Dubai.generateCookieArray();
 Paris.generateCookieArray();
 Lima.generateCookieArray();
-London.generateCookieArray();
 
 console.log(storeArray);
 
 
 //Access div in which table will live
 const cookieDivElem = document.getElementById('cookieOutput');
-
 // Make overall Table
 const tableElem = document.createElement('table');
 cookieDivElem.appendChild(tableElem);
@@ -97,8 +97,7 @@ function tableHeader(){
 
 
 
-
-//Make new row with data for each Store
+// Render new row in the table with data for each Store
 Store.prototype.render = function() {
 
   // New row for new Store. Only do once, outside of for loop
@@ -127,38 +126,74 @@ Store.prototype.render = function() {
   }
 
 
-function tableFooter(){
-  
-  // Create footer row 
-  const trFooterElem = document.createElement('tr');
-  tableElem.appendChild(trFooterElem);
-  // Create and add 'Total' title for the row
+
+// When submit happens, perform the handleSubmit function
+formElem.addEventListener('submit', handleSubmit);
+
+function handleSubmit(event) {
+  event.preventDefault();
+
+  // Set variables equal to the info put in the form
+  let city = event.target.name.value;
+  let minCustomer = parseInt(event.target.minCustomer.value);
+  let maxCustomer = parseInt(event.target.maxCustomer.value);
+  let avgCookie = parseInt(event.target.avgCookie.value);
+
+  // Put these variables into the constructor function
+  let newStoreAdded = new Store(city, minCustomer, maxCustomer, avgCookie);
+
+  newStoreAdded.generateCookieArray();
+  newStoreAdded.render();
+
+  //Remove the footer, then recreate it
+  tableElem.removeChild(trFooterElem);
+
+  const trFooterElem2 = document.createElement('tr');
+  tableElem.appendChild(trFooterElem2);
+
   const thTotalElem = document.createElement('th');
   thTotalElem.textContent = 'Total';
-  trFooterElem.appendChild(thTotalElem);
+  trFooterElem2.appendChild(thTotalElem);
 
-  // For every value in the hours array, add a new cell with that hourly total
   for (let k = 0; k < totalsPerHour.length; k++) {
     const thElem = document.createElement('th');
     thElem.textContent = totalsPerHour[k];
-    trFooterElem.appendChild(thElem);
+    trFooterElem2.appendChild(thElem);
   }
 
-  // Add the grand total of all locations as the last cell
   const thElem = document.createElement('th');
   thElem.textContent = overallGrandTotal;
-  trFooterElem.appendChild(thElem);
-
+  trFooterElem2.appendChild(thElem);
 }
+
 
 
 // Run functions to create table header, all table rows, and the footer. 
 tableHeader();
-Seattle.render();
+
 // Iterate through the array storing the store names
 for (let m = 0; m < storeArray.length; m++){
   let currentStore = storeArray[m];
   console.log(currentStore);
   currentStore.render();
 }
-tableFooter();
+
+// Create Footer
+const trFooterElem = document.createElement('tr');
+tableElem.appendChild(trFooterElem);
+// Create and add 'Total' title for the row
+const thTotalElem = document.createElement('th');
+thTotalElem.textContent = 'Total';
+trFooterElem.appendChild(thTotalElem);
+
+// For every value in the hours array, add a new cell with that hourly total
+for (let k = 0; k < totalsPerHour.length; k++) {
+  const thElem = document.createElement('th');
+  thElem.textContent = totalsPerHour[k];
+  trFooterElem.appendChild(thElem);
+}
+
+// Add the grand total of all locations as the last cell
+const thElem = document.createElement('th');
+thElem.textContent = overallGrandTotal;
+trFooterElem.appendChild(thElem);
