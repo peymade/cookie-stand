@@ -144,56 +144,48 @@ function handleSubmit(event) {
 
   newStoreAdded.generateCookieArray();
   newStoreAdded.render();
+  tableElem.innerHTML = '';
+  tableHeader();
+  renderAllStores();
+  tableFooter();
 
-  //Remove the footer, then recreate it
-  tableElem.removeChild(trFooterElem);
-
-  const trFooterElem2 = document.createElement('tr');
-  tableElem.appendChild(trFooterElem2);
-
-  const thTotalElem = document.createElement('th');
-  thTotalElem.textContent = 'Total';
-  trFooterElem2.appendChild(thTotalElem);
-
-  for (let k = 0; k < totalsPerHour.length; k++) {
-    const thElem = document.createElement('th');
-    thElem.textContent = totalsPerHour[k];
-    trFooterElem2.appendChild(thElem);
-  }
-
-  const thElem = document.createElement('th');
-  thElem.textContent = overallGrandTotal;
-  trFooterElem2.appendChild(thElem);
-}
-
-
-
-// Run functions to create table header, all table rows, and the footer. 
-tableHeader();
-
-// Iterate through the array storing the store names
-for (let m = 0; m < storeArray.length; m++){
-  let currentStore = storeArray[m];
-  console.log(currentStore);
-  currentStore.render();
 }
 
 // Create Footer
-const trFooterElem = document.createElement('tr');
-tableElem.appendChild(trFooterElem);
-// Create and add 'Total' title for the row
-const thTotalElem = document.createElement('th');
-thTotalElem.textContent = 'Total';
-trFooterElem.appendChild(thTotalElem);
 
-// For every value in the hours array, add a new cell with that hourly total
-for (let k = 0; k < totalsPerHour.length; k++) {
+function tableFooter() {
+  const trFooterElem = document.createElement('tr');
+  tableElem.appendChild(trFooterElem);
+  // Create and add 'Total' title for the row
+  const thTotalElem = document.createElement('th');
+  thTotalElem.textContent = 'Total';
+  trFooterElem.appendChild(thTotalElem);
+  
+  // For every value in the hours array, add a new cell with that hourly total
+  for (let k = 0; k < totalsPerHour.length; k++) {
+    const thElem = document.createElement('th');
+    thElem.textContent = totalsPerHour[k];
+    trFooterElem.appendChild(thElem);
+  }
+  
+  // Add the grand total of all locations as the last cell
   const thElem = document.createElement('th');
-  thElem.textContent = totalsPerHour[k];
+  thElem.textContent = overallGrandTotal;
   trFooterElem.appendChild(thElem);
-}
+  }
+  
+// Iterate through the array storing the store names
 
-// Add the grand total of all locations as the last cell
-const thElem = document.createElement('th');
-thElem.textContent = overallGrandTotal;
-trFooterElem.appendChild(thElem);
+function renderAllStores() {
+  for (let m = 0; m < storeArray.length; m++){
+    let currentStore = storeArray[m];
+    console.log(currentStore);
+    currentStore.render();
+  }
+  }
+  
+
+// Run functions to create table header, all table rows, and the footer. 
+tableHeader();
+renderAllStores();
+tableFooter();
